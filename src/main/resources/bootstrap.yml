@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: ms-user-management
+
+  cloud:
+    config:
+      fail-fast: true
+      enabled: true
+      uri: http://user:password@localhost:8888
