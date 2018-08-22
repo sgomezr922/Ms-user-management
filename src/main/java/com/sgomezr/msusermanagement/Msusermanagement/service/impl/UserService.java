@@ -1,5 +1,6 @@
 package com.sgomezr.msusermanagement.Msusermanagement.service.impl;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.sgomezr.msusermanagement.Msusermanagement.entity.UserEntity;
 import com.sgomezr.msusermanagement.Msusermanagement.feign.IFeignProduct;
 import com.sgomezr.msusermanagement.Msusermanagement.repository.IUserRepository;
@@ -7,6 +8,7 @@ import com.sgomezr.msusermanagement.Msusermanagement.service.IUsersService;
 import com.sgomezr.msusermanagement.Msusermanagement.web.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Optional;
@@ -59,9 +61,16 @@ public class UserService implements IUsersService {
     }
 
     @Override
+    @HystrixCommand(fallbackMethod = "deleteUserDefault")
     public UserDTO deleteUser(Long idUser) {
-       /*userRepository.deleteById(idUser);
-        feignProduct.deleteProductByIdUser(idUser);*/
+        //userRepository.deleteById(idUser);
+       /*feignProduct.deleteProductByIdUser(idUser);*/
+        new RestTemplate().delete("http.//localhost:8765/ms-product-management/product/{idUser}", idUser);
+        return new UserDTO();
+    }
+
+    public UserDTO deleteUserDefault(Long idUser){
+        System.out.println("Error");
         return null;
     }
 }

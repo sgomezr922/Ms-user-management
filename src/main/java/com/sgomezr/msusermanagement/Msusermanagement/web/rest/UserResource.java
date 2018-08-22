@@ -41,13 +41,13 @@ public class UserResource {
     }
 
     @RequestMapping(value = "/user/{idUser}", method = RequestMethod.GET)
-    public ResponseEntity<UserDTO> recuperarUsuarioPorId(@PathVariable Long idUser){
+    public ResponseEntity<UserDTO> getUserById(@PathVariable Long idUser){
         System.out.println(idUser);
-        return ResponseEntity.ok(usersService.getUser(1L));
+        return ResponseEntity.ok(usersService.getUser(idUser));
     }
 
     @RequestMapping(value = "/user/{user}/{pass}", method = RequestMethod.GET)
-    public ResponseEntity<UserDTO> recuperarUsuarioRegistrado(@PathVariable String user, @PathVariable String pass) {
+    public ResponseEntity<UserDTO> getRegisteredUser(@PathVariable String user, @PathVariable String pass) {
         UserDTO userDTO = usersService.getUser(user, pass);
         return ResponseEntity.ok(userDTO);
     }
@@ -55,7 +55,7 @@ public class UserResource {
     @RequestMapping(value = "/user/{idUser}", method = RequestMethod.DELETE)
     public ResponseEntity<String> deleteUserAndAllItsProducts(@PathVariable Long idUser){
         usersService.deleteUser(idUser);
-        return ResponseEntity.ok("Todo ha ido bien...");
+        return ResponseEntity.ok("All is OK!...");
     }
 
 }

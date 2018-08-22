@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @FeignClient(name = "ms-product-management")
 public interface IFeignProduct {
-    @RequestMapping(path = "product/{idUser}", method = RequestMethod.DELETE)
+    @RequestMapping(path = "/product/{idUser}", method = RequestMethod.DELETE)
     ResponseEntity<String> eliminarProductoByIdUsuario(@PathVariable("idUser") Long idUser);
 }
